@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedder</title>
+</head>
+<body>
+    <iframe id="embeddedFrame" style="width:100%;height:100vh;border:none;"></iframe>
+
+    <script>
+        function embedWebsite(embedUrl, targetWebsiteUrl) {
+            fetch(targetWebsiteUrl)
+                .then(response => response.text())
+                .then(html => {
+                    const newDoc = new DOMParser().parseFromString(html, "text/html");
+                    newDoc.documentElement.innerHTML = '<head></head><body></body>';
+                    document.open();
+                    document.write(newDoc.documentElement.outerHTML);
+                    document.close();
+
+                    const iframe = document.createElement('iframe');
+                    iframe.src = embedUrl;
+                    iframe.style.width = "100%";
+                    iframe.style.height = "100vh";
+                    iframe.style.border = "none";
+                    document.body.appendChild(iframe);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Example Usage
+        embedWebsite('https://example.com', 'https://targetwebsite.com');
+    </script>
+</body>
+</html>
