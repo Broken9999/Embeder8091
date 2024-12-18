@@ -6,31 +6,22 @@
     <title>Embedder</title>
 </head>
 <body>
-    <iframe id="embeddedFrame" style="width:100%;height:100vh;border:none;"></iframe>
-
     <script>
-        function embedWebsite(embedUrl, targetWebsiteUrl) {
-            fetch(targetWebsiteUrl)
-                .then(response => response.text())
-                .then(html => {
-                    const newDoc = new DOMParser().parseFromString(html, "text/html");
-                    newDoc.documentElement.innerHTML = '<head></head><body></body>';
-                    document.open();
-                    document.write(newDoc.documentElement.outerHTML);
-                    document.close();
+        function embedWebsite(embedUrl) {
+            document.open();
+            document.write('<!DOCTYPE html><html><head></head><body></body></html>');
+            document.close();
 
-                    const iframe = document.createElement('iframe');
-                    iframe.src = embedUrl;
-                    iframe.style.width = "100%";
-                    iframe.style.height = "100vh";
-                    iframe.style.border = "none";
-                    document.body.appendChild(iframe);
-                })
-                .catch(error => console.error('Error:', error));
+            const iframe = document.createElement('iframe');
+            iframe.src = embedUrl;
+            iframe.style.width = "100%";
+            iframe.style.height = "100vh";
+            iframe.style.border = "none";
+            document.body.appendChild(iframe);
         }
 
         // Example Usage
-        embedWebsite('https://fuzzy-space-barnacle-97qwr9jv7jxx2vq9-6969.app.github.dev/mastery?auth=821df55', 'google.com');
+        embedWebsite('https://example.com');
     </script>
 </body>
 </html>
